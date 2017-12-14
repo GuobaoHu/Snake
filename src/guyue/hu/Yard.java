@@ -12,7 +12,7 @@ public class Yard {
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 500;
 	public static final int GAP = 50;
-	public static final int UNIT = 25;
+	public static final int UNIT = 10;
 	
 	public void draw(Graphics g) {
 		g.drawRect(GAP, GAP, WIDTH, HEIGHT);

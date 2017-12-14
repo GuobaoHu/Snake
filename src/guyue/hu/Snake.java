@@ -59,16 +59,16 @@ public class Snake {
 		this.moving();
 		switch(dir) {
 		case U :
-			eggs.set(0, new Egg(head.getX(), head.getY()-25));
+			eggs.set(0, new Egg(head.getX(), head.getY()-Yard.UNIT));
 			break;
 		case D :
-			eggs.set(0, new Egg(head.getX(), head.getY()+25));
+			eggs.set(0, new Egg(head.getX(), head.getY()+Yard.UNIT));
 			break;
 		case L :
-			eggs.set(0, new Egg(head.getX()-25, head.getY()));
+			eggs.set(0, new Egg(head.getX()-Yard.UNIT, head.getY()));
 			break;
 		case R :
-			eggs.set(0, new Egg(head.getX()+25, head.getY()));
+			eggs.set(0, new Egg(head.getX()+Yard.UNIT, head.getY()));
 			break;
 		}
 		if(this.hitSelf() || this.hitWall()) {

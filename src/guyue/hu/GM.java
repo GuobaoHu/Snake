@@ -7,7 +7,7 @@ import java.util.*;
 public class GM extends Frame {
 	public static final int GAME_WIDTH = 700;
 	public static final int GAME_HEIGHT = 600;
-	public static final int REGAP = 200;
+	public static final int REGAP = 100;
 	private boolean pFlag = true;
 	private Yard yard = new Yard();
 	private Snake snake = new Snake(this);
