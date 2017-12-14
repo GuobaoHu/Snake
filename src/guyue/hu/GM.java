@@ -7,13 +7,14 @@ import java.util.*;
 public class GM extends Frame {
 	public static final int GAME_WIDTH = 700;
 	public static final int GAME_HEIGHT = 600;
-	public static final int REGAP = 300;
+	public static final int REGAP = 200;
 	private boolean pFlag = true;
 	private Yard yard = new Yard();
 	private Snake snake = new Snake(this);
 	private Egg egg;
 	private static Random rnd = new Random();
-
+	private Thread t = new Thread(new RePnt());
+	
 	public static void main(String[] args) {
 		GM gm = new GM();
 		gm.launch();
@@ -25,7 +26,7 @@ public class GM extends Frame {
 		this.addKeyListener(new KeyMonitor());
 		this.setResizable(false);
 		this.addEgg();
-		new Thread(new RePnt()).start();
+		t.start();
 		this.setVisible(true);
 	}
 
@@ -64,6 +65,12 @@ public class GM extends Frame {
 	private class Close extends WindowAdapter {
 		@Override
 		public void windowClosing(WindowEvent e) {
+			pFlag = false;
+			try {
+				t.join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			System.exit(0);
 		}
 	}
