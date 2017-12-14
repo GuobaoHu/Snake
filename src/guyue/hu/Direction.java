@@ -5,5 +5,5 @@ package guyue.hu;
  * @class describ:
  */
 public enum Direction {
-	U, D, L, R, STOP
+	U, D, L, R
 }

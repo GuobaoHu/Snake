@@ -2,13 +2,17 @@ package guyue.hu;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class GM extends Frame {
 	public static final int GAME_WIDTH = 700;
 	public static final int GAME_HEIGHT = 600;
+	public static final int REGAP = 300;
 	private boolean pFlag = true;
 	private Yard yard = new Yard();
-	private Egg egg = new Egg(50+Yard.UNIT*10, 50+Yard.UNIT*10, Direction.STOP);
+	private Snake snake = new Snake(this);
+	private Egg egg;
+	private static Random rnd = new Random();
 
 	public static void main(String[] args) {
 		GM gm = new GM();
@@ -20,14 +24,18 @@ public class GM extends Frame {
 		this.addWindowListener(new Close());
 		this.addKeyListener(new KeyMonitor());
 		this.setResizable(false);
+		this.addEgg();
 		new Thread(new RePnt()).start();
 		this.setVisible(true);
 	}
 
 	@Override
 	public void paint(Graphics g) {
+		g.drawString("length:" + snake.getEggs().size(), 10, 40);
 		yard.draw(g);
 		egg.draw(g);
+		snake.eatEgg(egg);
+		snake.draw(g);
 	}
 
 	/**
@@ -45,6 +53,14 @@ public class GM extends Frame {
 		g.drawImage(img, 0, 0, null);
 	}
 
+	public void addEgg() {
+		Egg e = new Egg(50+rnd.nextInt(24)*Yard.UNIT, 50+rnd.nextInt(20)*Yard.UNIT);
+		while(e.isOverlap(snake)) {
+			e = new Egg(50+rnd.nextInt(24)*Yard.UNIT, 50+rnd.nextInt(20)*Yard.UNIT);
+		}
+		egg = e;
+	}
+	
 	private class Close extends WindowAdapter {
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -55,7 +71,7 @@ public class GM extends Frame {
 	private class KeyMonitor extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			egg.keyPressed(e);
+			snake.keyPressed(e);
 		}
 	}
 	
@@ -65,7 +81,7 @@ public class GM extends Frame {
 			try	{
 				while(pFlag) {
 					repaint();
-					Thread.sleep(300);
+					Thread.sleep(REGAP);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
